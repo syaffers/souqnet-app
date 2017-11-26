@@ -1,0 +1,22 @@
+* {
+  font-family: 'Oxygen Mono', 'Courier New', Courier, monospace;
+}
+
+#container {
+  padding: 1em 6em;
+}
+
+#flash {
+  padding: 0.2em;
+  background: yellow;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.bk-plot-layout {
+  margin: 0 auto;
+}

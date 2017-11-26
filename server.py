@@ -1,5 +1,6 @@
 import os
 
+from numpy import stack
 from imageio import imread
 from keras.models import load_model
 from flask import (Flask, flash, render_template, redirect, request, session,
@@ -19,6 +20,7 @@ app.config['UPLOAD_FOLDER'] = os.environ['UPLOAD_FOLDER']
 
 
 def allowed_file(filename):
+    """ Checks if a filename's extension is acceptable """
     allowed_ext = filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
     return '.' in filename and allowed_ext
 
@@ -52,6 +54,7 @@ def home():
 
 @app.route('/error')
 def error():
+    """ Route for error page """
     return render_template('error.html')
 
 
@@ -66,12 +69,27 @@ def predict(filename):
     """ After uploading the image, show the prediction of the uploaded image
     in barchart form
     """
-    image_mtx = imread(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    image_mtx = imread(filepath)
     image_mtx = image_mtx.astype(float) / 255.
-    # take the first three channels only
-    image_mtx = image_mtx[:, :, :3]
+
+    try:
+        # HACK: imageio seems to automatically infer grayscale images as a
+        # 2d tensor, not 3d; need to support this logic. For now just duplicate
+        # the first channel.
+        image_mtx = image_mtx[:, :, :3]
+    except IndexError:
+        image_mtx = stack((image_mtx, image_mtx, image_mtx), axis=2)
+
+    try:
+        # HACK: Reshape for neural net input, redirect to error page if input
+        # image is not 128x128
+        image_mtx = image_mtx.reshape(-1, 128, 128, 3)
+    except ValueError:
+        return redirect(url_for('error'))
+
     # TODO: Celery defer this as it may take some time
-    predictions = NEURAL_NET.predict_proba(image_mtx.reshape(-1, 128, 128, 3))
+    predictions = NEURAL_NET.predict_proba(image_mtx)
     # TODO: Barplots with hover functionality
     script, div = generate_barplot(predictions)
 

@@ -1,8 +1,10 @@
 {% extends 'layout.html' %}
 {% block body %}
-<p>Looks like it's a...</p>
-<img src="{{image_path}}" alt="Input image">
-{{ plot_div|safe }}
+<div class="centered">
+    <p>Looks like it's a...</p>
+    <img src="{{image_path}}" alt="Input image">
+    {{ plot_div|safe }}
+</div>
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.10.min.js"></script>
 <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.10.min.js"></script>
 {{ plot_script|safe }}
