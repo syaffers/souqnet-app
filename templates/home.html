@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h1>SouqNet Image Predictor</h1>
+<h2>Upload an image and let the convolutional neural net classify your image</h2>
+
+<form action="/" method="post" enctype="multipart/form-data">
+  <input type="file" name="image" id="image">
+  <input type="submit" value="Submit">
+</form>
+{% endblock %}
