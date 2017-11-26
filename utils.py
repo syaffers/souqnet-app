@@ -13,7 +13,7 @@ IMAGE_LABELS = ['Headphone', 'Mouse', 'Camera', 'Smartphone',
 def random_name(filename):
     """Generate a random name for an uploaded file."""
     ext = filename.split('.')[-1]
-    rns = [random.randint(0, len(LETTER_SET)) for _ in range(3)]
+    rns = [random.randint(0, len(LETTER_SET) - 1) for _ in range(3)]
     name = ''.join([LETTER_SET[rn] for rn in rns])
     return "{new_fn}.{ext}".format(new_fn=name, ext=ext)
 
