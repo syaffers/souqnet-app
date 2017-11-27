@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 {% block body %}
-<p>Upload a 128 x 128 image and let the convolutional neural net classify your image!</p>
+<p>Upload an image and let the convolutional neural net classify your image!</p>
+
+<p>
+  This is a pretty simple app, so images which are not square in dimensions
+  will be scaled down and center cropped
+</p>
 
 <p>Possible labels: camera, glasses, headphone, laptop, mouse, shoes, smartphone, watch</p>
 
