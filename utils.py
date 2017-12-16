@@ -12,7 +12,7 @@ LETTER_SET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 IMAGE_LABELS = ['Headphone', 'Mouse', 'Camera', 'Smartphone',
                 'Glasses', 'Shoes', 'Watch', 'Laptop']
 
-def allowed_file(filename):
+def is_allowed_file(filename):
     """ Checks if a filename's extension is acceptable """
     allowed_ext = filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
     return '.' in filename and allowed_ext
@@ -70,8 +70,8 @@ def make_thumbnail(filepath):
     return False
 
 
-def random_name(filename):
-    """Generate a random name for an uploaded file."""
+def generate_random_name(filename):
+    """ Generate a random name for an uploaded file. """
     ext = filename.split('.')[-1]
     rns = [random.randint(0, len(LETTER_SET) - 1) for _ in range(3)]
     name = ''.join([LETTER_SET[rn] for rn in rns])
@@ -79,12 +79,12 @@ def random_name(filename):
 
 
 def generate_barplot(predictions):
-    """Generates script and `div` element of bar plot of predictions using
+    """ Generates script and `div` element of bar plot of predictions using
     bokeh
     """
     # TODO: Add hover functionality
     plot = figure(x_range=IMAGE_LABELS, plot_height=300, plot_width=400)
-    plot.vbar(x=IMAGE_LABELS, top=squeeze(predictions), width=0.8, bottom=0)
+    plot.vbar(x=IMAGE_LABELS, top=squeeze(predictions), width=0.8)
     plot.xaxis.major_label_orientation = pi / 2.
 
     return components(plot)

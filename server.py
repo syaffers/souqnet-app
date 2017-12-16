@@ -8,10 +8,10 @@ from flask import (Flask, flash, render_template, redirect, request, session,
                    send_file, url_for)
 from werkzeug.utils import secure_filename
 
-from utils import allowed_file, generate_barplot, make_thumbnail, random_name
+from utils import (is_allowed_file, generate_barplot, generate_random_name,
+                   make_thumbnail)
 
 NEURAL_NET_MODEL_PATH = os.environ['NEURAL_NET_MODEL_PATH']
-
 NEURAL_NET = load_model(NEURAL_NET_MODEL_PATH)
 
 app = Flask(__name__)
@@ -26,20 +26,21 @@ def home():
         return render_template('home.html')
 
     if request.method == 'POST':
-        # check is file is passed into the POST
+        # check if a file was passed into the POST request
         if 'image' not in request.files:
             flash('No file was uploaded.')
             return redirect(request.url)
 
-        # if filename is empty, then users didn't upload anythin
         image_file = request.files['image']
+
+        # if filename is empty, then assume no upload
         if image_file.filename == '':
-            flash('No selected file.')
+            flash('No file was uploaded.')
             return redirect(request.url)
 
         # check if the file is "legit"
-        if image_file and allowed_file(image_file.filename):
-            filename = secure_filename(random_name(image_file.filename))
+        if image_file and is_allowed_file(image_file.filename):
+            filename = secure_filename(generate_random_name(image_file.filename))
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             image_file.save(filepath)
             # HACK: Defer this to celery, might take time
@@ -47,19 +48,23 @@ def home():
             if passed:
                 return redirect(url_for('predict', filename=filename))
             else:
-                return redirect(url_for('error'))
+                return redirect(request.url)
 
 
-@app.route('/error')
-def error():
-    """ Route for error page """
-    return render_template('error.html')
+@app.errorhandler(500)
+def server_error(error):
+    """ Server error page handler """
+    return render_template('error.html'), 500
 
 
 @app.route('/images/<filename>')
 def images(filename):
     """ Route for serving uploaded images """
-    return send_file(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    if allowed_file(filename):
+        return send_file(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    else:
+        flash("File extension not allowed.")
+        return redirect(url_for('home'))
 
 
 @app.route('/predict/<filename>')
@@ -67,8 +72,9 @@ def predict(filename):
     """ After uploading the image, show the prediction of the uploaded image
     in barchart form
     """
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    image_mtx = imread(filepath)
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    image_url = url_for('images', filename=filename)
+    image_mtx = imread(image_path)
     image_mtx = image_mtx.astype(float) / 255.
 
     try:
@@ -89,5 +95,5 @@ def predict(filename):
         'predict.html',
         plot_script=script,
         plot_div=div,
-        image_path='/images/{}'.format(filename)
+        image_url=image_url
     )
