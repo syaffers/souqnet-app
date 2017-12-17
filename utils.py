@@ -30,7 +30,7 @@ def make_thumbnail(filepath):
 
     # if the width and height are equal, scale down
     if w == h:
-        thumb = img.resize((128, 128), Image.ANTIALIAS)
+        thumb = img.resize((128, 128), Image.BICUBIC)
         thumb.save(filepath)
         return True
 
@@ -39,12 +39,11 @@ def make_thumbnail(filepath):
         # scale so that the width is 128
         ratio = w / 128.
         w_new, h_new = 128, int(h / ratio)
-        thumb = img.resize((w_new, h_new), Image.ANTIALIAS)
+        thumb = img.resize((w_new, h_new), Image.BICUBIC)
 
         # crop the excess
         top, bottom = 0, 0
         margin = h_new - 128
-        print("margin is:", margin)
         top, bottom = margin // 2, 128 + margin // 2
         box = (0, top, 128, bottom)
         cropped = thumb.crop(box)
@@ -56,12 +55,11 @@ def make_thumbnail(filepath):
         # scale so that the height is 128
         ratio = h / 128.
         w_new, h_new = int(w / ratio), 128
-        thumb = img.resize((w_new, h_new), Image.ANTIALIAS)
+        thumb = img.resize((w_new, h_new), Image.BICUBIC)
 
         # crop the excess
         left, right = 0, 0
         margin = w_new - 128
-        print("margin is:", margin)
         left, right = margin // 2, 128 + margin // 2
         box = (left, 0, right, 128)
         cropped = thumb.crop(box)
