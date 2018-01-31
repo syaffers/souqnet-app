@@ -52,7 +52,7 @@ def home():
                 return redirect(request.url)
 
 
-@app.route('/about')
+@app.route('/about/')
 def about():
     """ Route for the about page """
     return render_template('about.html')
