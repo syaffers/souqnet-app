@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h2>What is a Convolutional Neural Network?</h2>
+
+<p>
+    Before we tell you what it is, think about how you are seeing this webpage
+    right now. How does your brain know what a computer or a website look like?
+    Well its because you have <strong>learned</strong> (since your youth) what
+    a computer is. You also know that a your smartphone and a piece of
+    rectangular cardboard (of roughly the same shape) are two distinct objects.
+    But naively, you can think of them as having dimensions and are therefore
+    the same. To an extreme, you also managed to learn nuanced differences; say
+    between an <strong>Android phone</strong> and an <strong>iPhone</strong>
+    even though they are quite similar sometimes.
+</p>
+
+<p>
+    Convolutional neural networks are a form of <strong>machine
+    learning</strong> meaning that the computers are fed LOTS of data and, over
+    time, learn how to discriminate between images, sounds, DNA or just about
+    any data you can think about. With the cheap cost of computational power of
+    graphical processing units nowadays (thanks, gamers!), we can afford to
+    build very complex models which are increasingly better than traditional
+    machine learning models.
+</p>
+
+<p>
+    Convolutional neural networks uses a bunch of filters (think Instagram!)
+    which allows it to easily detect corners and edges in an image. Not only
+    that; deep in the network the neural network can detect entire faces by
+    combining filters heirarchically. It's like pieceing a very large puzzle
+    from very small pieces and then guessing what that puzzle is. What kinds of
+    filters do we need to select for the neural network? Nothing! In fact, the
+    convolutional neural network will learn these filters as they go along,
+    making it the <strong>best</strong> filter to be able to classify whatever
+    image it was trained to see.
+</p>
+
+<h2>How was this made?</h2>
+<p>
+    We scraped some images of fashionable items from the UAE Souq.com website
+    and trained a convolutional neural network. The libraries we used include
+    <strong>Keras</strong>, <strong>TensorFlow</strong> and a lot of GPU power.
+    This web application is made using <strong>Flask</strong> and
+    <strong>Python</strong>.
+</p>
+{% endblock %}

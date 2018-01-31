@@ -52,11 +52,10 @@ def home():
                 return redirect(request.url)
 
 
-@app.errorhandler(500)
-def server_error(error):
-    """ Server error page handler """
-    return render_template('error.html'), 500
-
+@app.route('/about')
+def about():
+    """ Route for the about page """
+    return render_template('about.html')
 
 @app.route('/images/<filename>')
 def images(filename):
@@ -98,3 +97,9 @@ def predict(filename):
         plot_div=div,
         image_url=image_url
     )
+
+
+@app.errorhandler(500)
+def server_error(error):
+    """ Server error page handler """
+    return render_template('error.html'), 500
