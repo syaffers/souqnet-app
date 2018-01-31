@@ -13,6 +13,10 @@
   border-radius: 3px;
 }
 
+#snap {
+  margin: 1em;
+}
+
 .centered {
   text-align: center;
 }
