@@ -60,7 +60,7 @@ def server_error(error):
 @app.route('/images/<filename>')
 def images(filename):
     """ Route for serving uploaded images """
-    if allowed_file(filename):
+    if is_allowed_file(filename):
         return send_file(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     else:
         flash("File extension not allowed.")
