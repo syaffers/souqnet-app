@@ -55,10 +55,13 @@
 
 <h2>How was this made?</h2>
 <p>
-    We scraped some images of fashionable items from the UAE Souq.com website
-    and trained a convolutional neural network. The libraries we used include
-    <strong>Keras</strong>, <strong>TensorFlow</strong> and a lot of GPU power.
-    This web application is made using <strong>Flask</strong> and
-    <strong>Python</strong>.
+    We scraped about 5200 images of fashionable items from the UAE Souq.com
+    website (since it has nice pictures) and trained a convolutional neural
+    network on those images. Originally the images are well-centered and have
+    a white background. If the app is not predicting well, try getting closer
+    to the camera and making the objects appear as clearly as possible without
+    much background noise. The libraries we used include <strong>Keras</strong>,
+    <strong>TensorFlow</strong> and a lot of GPU power. This web application is
+    made using <strong>Flask</strong> and <strong>Python</strong>.
 </p>
 {% endblock %}
