@@ -8,8 +8,8 @@ from flask import (Flask, flash, render_template, redirect, request, session,
                    send_file, url_for)
 from werkzeug.utils import secure_filename
 
-from utils import (is_allowed_file, generate_barplot, generate_random_name,
-                   make_thumbnail)
+from utils import (decode_and_save, is_allowed_file, generate_barplot,
+                   generate_random_name, make_thumbnail)
 
 NEURAL_NET_MODEL_PATH = os.environ['NEURAL_NET_MODEL_PATH']
 NEURAL_NET = load_model(NEURAL_NET_MODEL_PATH)
@@ -27,22 +27,23 @@ def home():
 
     if request.method == 'POST':
         # check if a file was passed into the POST request
-        if 'image' not in request.files:
-            flash('No file was uploaded.')
+        if 'image' not in request.form:
+            flash('No snapshot was uploaded.')
             return redirect(request.url)
 
-        image_file = request.files['image']
+        image_data = request.form['image']
 
         # if filename is empty, then assume no upload
-        if image_file.filename == '':
-            flash('No file was uploaded.')
+        if image_data == '':
+            flash('No snapshot was uploaded.')
             return redirect(request.url)
 
-        # check if the file is "legit"
-        if image_file and is_allowed_file(image_file.filename):
-            filename = secure_filename(generate_random_name(image_file.filename))
+        # check if the image is "legit"
+        if image_data:
+            filename = secure_filename(generate_random_name('test.png'))
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            image_file.save(filepath)
+            decode_and_save(image_data, filepath)
+
             # HACK: Defer this to celery, might take time
             passed = make_thumbnail(filepath)
             if passed:

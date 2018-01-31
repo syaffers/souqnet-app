@@ -1,5 +1,7 @@
+import os
 import random
 from math import pi
+from base64 import decodebytes
 
 from PIL import Image
 from numpy import squeeze
@@ -11,6 +13,13 @@ ALLOWED_EXTENSIONS = set(['png', 'bmp', 'jpg', 'jpeg', 'gif'])
 LETTER_SET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 IMAGE_LABELS = ['Headphone', 'Mouse', 'Camera', 'Smartphone',
                 'Glasses', 'Shoes', 'Watch', 'Laptop']
+
+def decode_and_save(image_data, filepath):
+    """ Decodes a base64 image data into file and saves it """
+    with open(filepath, 'wb') as image_file:
+        actual_data = bytes(image_data.split(',')[1], 'utf-8')
+        image_file.write(decodebytes(actual_data))
+
 
 def is_allowed_file(filename):
     """ Checks if a filename's extension is acceptable """
@@ -81,7 +90,7 @@ def generate_barplot(predictions):
     bokeh
     """
     # TODO: Add hover functionality
-    plot = figure(x_range=IMAGE_LABELS, plot_height=300, plot_width=400)
+    plot = figure(x_range=IMAGE_LABELS, plot_height=360, plot_width=480)
     plot.vbar(x=IMAGE_LABELS, top=squeeze(predictions), width=0.8)
     plot.xaxis.major_label_orientation = pi / 2.
 
