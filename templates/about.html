@@ -14,6 +14,12 @@
     even though they are quite similar sometimes.
 </p>
 
+<div class="centered">
+    <img class="img-three-quarter"
+         src="{{url_for('static',filename='images/cnn2.jpeg')}}"
+         alt="Structure of a convolutional neural network">
+</div>
+
 <p>
     Convolutional neural networks are a form of <strong>deep learning</strong>
     meaning that the computers model very <strong>complex features</strong>
@@ -31,26 +37,28 @@
 
 <div class="centered">
     <img class="img-three-quarter"
-         src="{{url_for('static',filename='images/cnn2.jpeg')}}"
-         alt="ConvNets">
+         src="{{url_for('static',filename='images/cnn.jpeg')}}"
+         alt="Image of layers in a convolutional neural network">
 </div>
 
 <p>
-    Convolutional neural networks uses a bunch of filters (think Instagram!)
-    which allows it to easily detect corners and edges in an image. Not only
-    that; deep in the network the neural network can detect entire faces by
-    combining filters heirarchically. It's like pieceing together a <strong>
-    very large puzzle</strong> from <strong>very small pieces</strong> and then
-    guessing what that puzzle is. What kinds of filters do we need to select
-    for the neural network? Nothing! In fact, the convolutional neural network
-    will learn these filters as they go along, creating the <strong>best</strong>
-    filter to be able to classify whatever image it was trained to see.
+    Convolutional neural networks uses a bunch of <strong>filters</strong>
+    (think Instagram!) which allows it to easily detect corners and edges in an
+    image. Not only that; deep in the network the neural network can detect
+    entire faces by <strong>combining filters</strong> heirarchically. It's
+    like pieceing together a <strong> very large puzzle</strong> from
+    <strong>very small pieces</strong> and then guessing what that puzzle is.
+    What kinds of filters do we need to select for the neural network? Any kind,
+    even random noise works! In fact, the convolutional neural network will
+    <strong>tune</strong> these filters as they go along, creating the
+    <strong>best filter</strong> to be able to classify whatever image it was
+    trained to see.
 </p>
 
 <div class="centered">
-    <img class="img-three-quarter"
-         src="{{url_for('static',filename='images/cnn.jpeg')}}"
-         alt="ConvNets2">
+    <img class="img-half"
+         src="{{url_for('static',filename='images/souq-images.png')}}"
+         alt="Sample of images from the Souq.com crawling">
 </div>
 
 <h2>How was this made?</h2>
@@ -62,6 +70,13 @@
     to the camera and making the objects appear as clearly as possible without
     much background noise. The libraries we used include <strong>Keras</strong>,
     <strong>TensorFlow</strong> and a lot of GPU power. This web application is
-    made using <strong>Flask</strong> and <strong>Python</strong>.
+    made using <strong>Flask</strong> and <strong>Bokeh</strong>, all wrapped
+    over <strong>Python</strong>.
 </p>
+
+<div class="centered">
+    <img class="img-half"
+            src="{{url_for('static',filename='images/python-logos.png')}}"
+            alt="Logos of Pytohn packages used to make this app">
+</div>
 {% endblock %}
