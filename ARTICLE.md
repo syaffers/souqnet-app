@@ -280,9 +280,9 @@ The `<form>` is also coded to have the `enctype="multipart/form-data"`
 attribute. This is necessary for image uploading as files are passed as a
 separate `POST` variable.
 
-The filename does not have to match the route names in our `server.py`. Let's
+:closed_book: The filename does not have to match the route names in our `server.py`. Let's
 create the remaining templates. We will just have placeholder text for now
-until we code the actual logic of the predictions. !!! ASIDE !!!
+until we code the actual logic of the predictions.
 
 The results page:
 
@@ -434,9 +434,9 @@ to update the home template.
     </form>
     {% endblock %}
 
-Flash messages come in lists, hence why there is a `for` iterator. You can
+:closed_book: Flash messages come in lists, hence why there is a `for` iterator. You can
 style this however you wish, however, for the purposes of this tutorial, we
-will just focus on functionality. !!! ASIDE !!!
+will just focus on functionality.
 
 You should test the image uploading functionality now and see if images are
 making its way into the filesystem. To do this, just restart the app and upload
@@ -527,13 +527,13 @@ again.
     ===
     (fuzzvis) $ export UPLOAD_FOLDER="/tmp/fuzzvis"
 
-This is a temporary change to the environment variables; the variables will
+:closed_book: This is a temporary change to the environment variables; the variables will
 be unset when you close the terminal window. For a persistent environment
 variable, edit your `.bash_profile` or `/etc/environment` file. A log out and
 log back in may be required for this function properly. You can always check
 if environment variables are set or not by typing `$ echo $UPLOAD_FOLDER` and
 checking that it matches what you want. You should refer to this [environment
-variables guide][7] for more information. !!!ASIDE!!!
+variables guide][7] for more information.
 
 You should do the same for the secret key. Again, this value should be hard to
 guess in production. For now we can just copy the value to the environment
@@ -587,10 +587,9 @@ for our web application. Let's allow typical image extensions like `jpeg`,
 
     ...
 
-You should keep the constants (i.e. variables with `CAPITAL_SNAKE_CASE`) at the
+:closed_book: You should keep the constants (i.e. variables with `CAPITAL_SNAKE_CASE`) at the
 beginning of the file. This is the convention and it's easier to update in the
 future. Non-route functions should also come before the route functions.
-!!! ASIDE !!!
 
 Now, we can  write a function that will generate the filenames. We need to keep
 the original extensions of the uploaded file so let's pass the uploaded
